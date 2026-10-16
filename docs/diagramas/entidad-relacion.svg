@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="titulo descripcion">
+<title id="titulo">RentATroka | Diagrama Entidad-Relación</title><desc id="descripcion">Modelo relacional · MySQL · Tres entidades del negocio y una tabla de autenticación</desc>
+<defs><marker id="flecha" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#779094" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="800" fill="#ffffff"/>
+<text x="44" y="47" font-family="Segoe UI,Arial,sans-serif" font-size="27" font-weight="700" fill="#172c35">RentATroka | Diagrama Entidad-Relación</text>
+<text x="44" y="77" font-family="Segoe UI,Arial,sans-serif" font-size="14" fill="#607078">Modelo relacional · MySQL · Tres entidades del negocio y una tabla de autenticación</text>
+<rect x="40" y="130" width="320" height="198" rx="10" fill="#fff" stroke="#cad5d3"/>
+<path d="M50 130 H350 Q360 130 360 140 V178 H40 V140 Q40 130 50 130" fill="#172c35"/>
+<text x="58" y="161" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="17" font-weight="650" fill="#fff">CLIENTES</text>
+<text x="58" y="205" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600" fill="#243a43">id</text>
+<text x="342" y="205" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">INT  PK</text>
+<line x1="52" y1="217" x2="348" y2="217" stroke="#eef1ef"/>
+<text x="58" y="240" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#243a43">nombre</text>
+<text x="342" y="240" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">VARCHAR(100)</text>
+<line x1="52" y1="252" x2="348" y2="252" stroke="#eef1ef"/>
+<text x="58" y="275" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600" fill="#243a43">documento</text>
+<text x="342" y="275" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">VARCHAR(30)  UK</text>
+<line x1="52" y1="287" x2="348" y2="287" stroke="#eef1ef"/>
+<text x="58" y="310" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#243a43">telefono</text>
+<text x="342" y="310" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">VARCHAR(20)</text>
+<rect x="840" y="130" width="320" height="233" rx="10" fill="#fff" stroke="#cad5d3"/>
+<path d="M850 130 H1150 Q1160 130 1160 140 V178 H840 V140 Q840 130 850 130" fill="#172c35"/>
+<text x="858" y="161" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="17" font-weight="650" fill="#fff">VEHÍCULOS</text>
+<text x="858" y="205" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600" fill="#243a43">id</text>
+<text x="1142" y="205" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">INT  PK</text>
+<line x1="852" y1="217" x2="1148" y2="217" stroke="#eef1ef"/>
+<text x="858" y="240" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600" fill="#243a43">placa</text>
+<text x="1142" y="240" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">VARCHAR(15)  UK</text>
+<line x1="852" y1="252" x2="1148" y2="252" stroke="#eef1ef"/>
+<text x="858" y="275" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#243a43">marca</text>
+<text x="1142" y="275" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">VARCHAR(50)</text>
+<line x1="852" y1="287" x2="1148" y2="287" stroke="#eef1ef"/>
+<text x="858" y="310" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#243a43">modelo</text>
+<text x="1142" y="310" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">VARCHAR(50)</text>
+<line x1="852" y1="322" x2="1148" y2="322" stroke="#eef1ef"/>
+<text x="858" y="345" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#243a43">tarifa_diaria</text>
+<text x="1142" y="345" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">DECIMAL(10,2)</text>
+<rect x="420" y="360" width="360" height="268" rx="10" fill="#fff" stroke="#cad5d3"/>
+<path d="M430 360 H770 Q780 360 780 370 V408 H420 V370 Q420 360 430 360" fill="#172c35"/>
+<text x="438" y="391" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="17" font-weight="650" fill="#fff">ALQUILERES</text>
+<text x="438" y="435" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600" fill="#243a43">id</text>
+<text x="762" y="435" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">INT  PK</text>
+<line x1="432" y1="447" x2="768" y2="447" stroke="#eef1ef"/>
+<text x="438" y="470" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600" fill="#243a43">cliente_id</text>
+<text x="762" y="470" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">INT  FK</text>
+<line x1="432" y1="482" x2="768" y2="482" stroke="#eef1ef"/>
+<text x="438" y="505" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600" fill="#243a43">vehiculo_id</text>
+<text x="762" y="505" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">INT  FK</text>
+<line x1="432" y1="517" x2="768" y2="517" stroke="#eef1ef"/>
+<text x="438" y="540" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#243a43">fecha_inicio</text>
+<text x="762" y="540" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">DATE</text>
+<line x1="432" y1="552" x2="768" y2="552" stroke="#eef1ef"/>
+<text x="438" y="575" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#243a43">fecha_fin</text>
+<text x="762" y="575" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">DATE</text>
+<line x1="432" y1="587" x2="768" y2="587" stroke="#eef1ef"/>
+<text x="438" y="610" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#243a43">tarifa_diaria_aplicada</text>
+<text x="762" y="610" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">DECIMAL(10,2)</text>
+<rect x="40" y="490" width="320" height="198" rx="10" fill="#fff" stroke="#cad5d3"/>
+<path d="M50 490 H350 Q360 490 360 500 V538 H40 V500 Q40 490 50 490" fill="#172c35"/>
+<text x="58" y="521" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="17" font-weight="650" fill="#fff">USUARIOS</text>
+<text x="58" y="565" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600" fill="#243a43">id</text>
+<text x="342" y="565" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">INT  PK</text>
+<line x1="52" y1="577" x2="348" y2="577" stroke="#eef1ef"/>
+<text x="58" y="600" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#243a43">nombre</text>
+<text x="342" y="600" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">VARCHAR(100)</text>
+<line x1="52" y1="612" x2="348" y2="612" stroke="#eef1ef"/>
+<text x="58" y="635" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600" fill="#243a43">nombre_usuario</text>
+<text x="342" y="635" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">VARCHAR(50)  UK</text>
+<line x1="52" y1="647" x2="348" y2="647" stroke="#eef1ef"/>
+<text x="58" y="670" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#243a43">clave_hash</text>
+<text x="342" y="670" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">VARCHAR(255)</text>
+<path d="M360 220 H390 V450 H420" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round"/>
+<text x="370" y="209" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="#172c35">1</text>
+<text x="370" y="413" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">realiza</text>
+<text x="414" y="439" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#172c35">0..N</text>
+<path d="M840 220 H810 V485 H780" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round"/>
+<text x="826" y="209" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="#172c35">1</text>
+<text x="826" y="412" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">participa</text>
+<text x="786" y="474" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#172c35">0..N</text>
+<text x="840" y="548" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="650" fill="#df591e">Reglas del modelo</text>
+<text x="840" y="579" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">Fecha final posterior a la inicial.</text>
+<text x="840" y="604" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">Tarifas mayores que cero.</text>
+<text x="840" y="629" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">Borrado restringido si hay alquileres.</text>
+<text x="840" y="654" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">Los cruces se validan en el modelo.</text>
+<text x="40" y="728" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">Usuarios permite ingresar al sistema; no representa a los clientes.</text>
+<text x="40" y="761" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">PK: clave primaria   ·   FK: clave foránea   ·   UK: valor único   ·   Importe = días × tarifa aplicada</text>
+</svg>

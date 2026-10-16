@@ -1,0 +1,35 @@
+flowchart TB
+    navegador["Navegador del personal"]
+    filtros["Filtros: sesión y token de formulario"]
+    sesion["HttpSession: usuarioSesion"]
+    subgraph controlador["CONTROLADOR"]
+        login["LoginServlet: POST /login"]
+        inicio["InicioServlet: GET /inicio"]
+    end
+    subgraph modelo["MODELO"]
+        servicio["AutenticacionService"]
+        dao["UsuarioDAO: PreparedStatement"]
+        conexion["ConexionBD: conexión JDBC"]
+        bean["JavaBean Usuario"]
+        servicio -->|consulta| dao
+        dao --> conexion
+        dao -. devuelve .-> bean
+        bean -. datos .-> servicio
+    end
+    subgraph vista["VISTA: JSP + JSTL"]
+        acceso["login.jsp: formulario y mensajes"]
+        panel["inicio.jsp: página protegida"]
+    end
+    mysql[("MySQL: rentatroka")]
+    navegador -->|"1. Petición HTTP"| filtros
+    filtros -->|"2. POST /login"| login
+    login -->|"3. autenticar"| servicio
+    conexion <-->|"4. SQL y resultados"| mysql
+    servicio -. "5. Resultado sin hash" .-> login
+    login -->|"6. Acceso válido: nueva sesión"| sesion
+    login -. "7. redirect /inicio" .-> navegador
+    filtros -->|"8. GET /inicio con sesión"| inicio
+    inicio -->|"9. forward"| panel
+    login -->|"Si hay error: forward"| acceso
+    acceso -->|HTML| navegador
+    panel -->|"10. HTML"| navegador

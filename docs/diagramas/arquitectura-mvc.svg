@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="860" viewBox="0 0 1200 860" role="img" aria-labelledby="titulo descripcion">
+<title id="titulo">RentATroka | Arquitectura MVC</title><desc id="descripcion">Petición típica de acceso · JavaBeans + DAO/JDBC · Servlets · JSP/JSTL · Tomcat 11</desc>
+<defs><marker id="flecha" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#779094" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="860" fill="#ffffff"/>
+<text x="44" y="47" font-family="Segoe UI,Arial,sans-serif" font-size="27" font-weight="700" fill="#172c35">RentATroka | Arquitectura MVC</text>
+<text x="44" y="77" font-family="Segoe UI,Arial,sans-serif" font-size="14" fill="#607078">Petición típica de acceso · JavaBeans + DAO/JDBC · Servlets · JSP/JSTL · Tomcat 11</text>
+<rect x="325" y="285" width="300" height="150" rx="14" fill="#fff5ed" stroke="#efc2a8"/>
+<text x="345" y="308" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="700" fill="#df591e">CONTROLADOR</text>
+<rect x="680" y="285" width="480" height="360" rx="14" fill="#eef5f1" stroke="#bdcfc3"/>
+<text x="700" y="308" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="700" fill="#37614c">MODELO</text>
+<rect x="40" y="485" width="585" height="160" rx="14" fill="#eef2f7" stroke="#c2cedd"/>
+<text x="60" y="510" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="700" fill="#465c7c">VISTA</text>
+<rect x="40" y="140" width="220" height="95" rx="10" fill="#fff" stroke="#cad5d3"/>
+<text x="150.0" y="171" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="650" fill="#243a43">Navegador</text>
+<text x="150.0" y="195" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">Personal de RentATroka</text>
+<rect x="350" y="140" width="250" height="95" rx="10" fill="#fff" stroke="#cad5d3"/>
+<text x="475.0" y="171" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="650" fill="#243a43">Filtros</text>
+<text x="475.0" y="195" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">Sesión y token de formulario</text>
+<rect x="820" y="140" width="310" height="95" rx="10" fill="#fff" stroke="#cad5d3"/>
+<text x="975.0" y="171" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="650" fill="#243a43">HttpSession</text>
+<text x="975.0" y="195" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">Identidad: usuarioSesion</text>
+<rect x="350" y="330" width="250" height="85" rx="10" fill="#fff" stroke="#cad5d3"/>
+<text x="475.0" y="361" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="650" fill="#243a43">Servlets</text>
+<text x="475.0" y="385" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">LoginServlet / InicioServlet</text>
+<rect x="705" y="350" width="195" height="85" rx="10" fill="#fff" stroke="#cad5d3"/>
+<text x="802.5" y="381" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="650" fill="#243a43">Servicio</text>
+<text x="802.5" y="405" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">AutenticacionService</text>
+<rect x="940" y="350" width="195" height="85" rx="10" fill="#fff" stroke="#cad5d3"/>
+<text x="1037.5" y="381" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="650" fill="#243a43">DAO</text>
+<text x="1037.5" y="405" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">UsuarioDAO</text>
+<rect x="705" y="520" width="195" height="85" rx="10" fill="#fff" stroke="#cad5d3"/>
+<text x="802.5" y="551" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="650" fill="#243a43">JavaBean</text>
+<text x="802.5" y="575" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">Usuario, sin hash en sesión</text>
+<rect x="940" y="520" width="195" height="85" rx="10" fill="#fff" stroke="#cad5d3"/>
+<text x="1037.5" y="551" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="650" fill="#243a43">Conexión</text>
+<text x="1037.5" y="575" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">ConexionBD · JDBC</text>
+<rect x="75" y="535" width="270" height="80" rx="10" fill="#fff" stroke="#cad5d3"/>
+<text x="210.0" y="566" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="650" fill="#243a43">JSP + JSTL</text>
+<text x="210.0" y="590" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">login.jsp / inicio.jsp</text>
+<rect x="940" y="715" width="195" height="85" rx="10" fill="#fff7ef" stroke="#e9b596"/>
+<text x="1037.5" y="746" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="650" fill="#243a43">MySQL</text>
+<text x="1037.5" y="770" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">Base de datos rentatroka</text>
+<path d="M260 188 H350" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" marker-end="url(#flecha)"/>
+<text x="305" y="174" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">HTTP</text>
+<path d="M475 235 V330" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" marker-end="url(#flecha)"/>
+<text x="491" y="271" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">Petición validada</text>
+<path d="M600 372 H705" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" marker-end="url(#flecha)" marker-start="url(#flecha)"/>
+<text x="652" y="356" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">autenticar</text>
+<path d="M900 392 H940" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" marker-end="url(#flecha)" marker-start="url(#flecha)"/>
+<path d="M1038 435 V520" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" marker-end="url(#flecha)" marker-start="url(#flecha)"/>
+<text x="1053" y="485" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">JDBC</text>
+<path d="M1038 605 V715" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" marker-end="url(#flecha)" marker-start="url(#flecha)"/>
+<text x="1053" y="684" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">SQL / datos</text>
+<path d="M940 410 H920 V490 H803 V520" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#flecha)"/>
+<text x="806" y="477" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">Cuenta consultada</text>
+<path d="M803 520 V435" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#flecha)"/>
+<text x="787" y="490" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078"></text>
+<path d="M600 345 H650 V188 H820" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" marker-end="url(#flecha)"/>
+<text x="670" y="173" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">Leer / crear sesión</text>
+<path d="M475 415 V575 H345" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" marker-end="url(#flecha)"/>
+<text x="490" y="465" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">forward()</text>
+<path d="M185 535 V235" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" marker-end="url(#flecha)"/>
+<text x="171" y="384" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">HTML</text>
+<path d="M375 330 V270 H260 V235" fill="none" stroke="#779094" stroke-width="2" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#flecha)"/>
+<text x="310" y="291" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">redirect /inicio</text>
+<text x="40" y="710" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="650" fill="#df591e">Acceso válido</text>
+<text x="40" y="740" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">El Servlet crea una sesión nueva y redirige a /inicio.</text>
+<text x="40" y="765" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">El navegador realiza otra petición; InicioServlet hace forward a la JSP.</text>
+<text x="40" y="790" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#607078">Si las credenciales fallan, LoginServlet vuelve a login.jsp con el mensaje.</text>
+<text x="40" y="830" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#607078">Flecha doble: llamada y respuesta   ·   Línea discontinua: datos o redirección   ·   SQL solo en DAO; HTML solo en JSP</text>
+</svg>

@@ -1,0 +1,32 @@
+erDiagram
+    direction TB
+    CLIENTES ||--o{ ALQUILERES : realiza
+    VEHICULOS ||--o{ ALQUILERES : participa
+    CLIENTES {
+        INT id PK
+        VARCHAR_100 nombre
+        VARCHAR_30 documento UK
+        VARCHAR_20 telefono
+    }
+    VEHICULOS {
+        INT id PK
+        VARCHAR_15 placa UK
+        VARCHAR_50 marca
+        VARCHAR_50 modelo
+        DECIMAL_10_2 tarifa_diaria
+    }
+    ALQUILERES {
+        INT id PK
+        INT cliente_id FK
+        INT vehiculo_id FK
+        DATE fecha_inicio
+        DATE fecha_fin
+        DECIMAL_10_2 tarifa_diaria_aplicada
+    }
+    USUARIOS {
+        INT id PK
+        VARCHAR_100 nombre
+        VARCHAR_50 nombre_usuario UK
+        VARCHAR_255 clave_hash
+    }
+
