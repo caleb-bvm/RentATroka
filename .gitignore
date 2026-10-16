@@ -1,0 +1,8 @@
+/target/
+/.local/
+/src/main/resources/db.properties
+/.env
+/.idea/
+*.log
+/nbactions-private.xml
+
