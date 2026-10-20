@@ -1,0 +1,61 @@
+.modulo-vehiculos { padding: 28px 0 8px; }
+.modulo-vehiculos .enlace-volver { display: inline-block; margin-bottom: 18px; font-size: 13px; color: var(--secundario); text-decoration: none; }
+.modulo-vehiculos .enlace-volver:hover { color: var(--naranja-oscuro); text-decoration: underline; }
+.modulo-vehiculos .encabezado-modulo { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 26px; }
+.modulo-vehiculos h1 { margin: 10px 0 6px; font-size: clamp(28px, 4vw, 38px); letter-spacing: -1.2px; font-weight: 650; }
+.modulo-vehiculos .encabezado-modulo .texto-secundario { margin: 0; font-size: 14px; }
+.modulo-vehiculos .solo-lectores { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Busqueda */
+
+.modulo-vehiculos .buscador { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+.modulo-vehiculos .buscador input { flex: 1 1 260px; min-height: 44px; padding: 10px 14px; border: 1px solid #bdc9c7; border-radius: 7px; background: white; color: var(--tinta); }
+.modulo-vehiculos .buscador input:focus { border-color: var(--naranja); }
+.modulo-vehiculos .contador { margin: 0 0 10px; font-size: 12px; color: var(--secundario); }
+
+/* Contenedor blanco compartido por la tabla y el formulario */
+
+.modulo-vehiculos .panel { background: white; border: 1px solid var(--borde); border-radius: 12px; }
+.modulo-vehiculos .vacio { display: grid; gap: 6px; padding: 44px 28px; text-align: center; }
+.modulo-vehiculos .vacio .texto-secundario { margin: 0; font-size: 14px; }
+
+/* Tabla */
+
+.modulo-vehiculos .tabla-contenedor { overflow-x: auto; }
+.modulo-vehiculos .tabla { width: 100%; border-collapse: collapse; font-size: 14px; }
+.modulo-vehiculos .tabla th, .modulo-vehiculos .tabla td { padding: 14px 20px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--borde); }
+.modulo-vehiculos .tabla thead th { background: #fafbfa; color: var(--secundario); font-size: 11px; font-weight: 750; letter-spacing: 1.5px; text-transform: uppercase; }
+.modulo-vehiculos .tabla tbody tr:last-child td { border-bottom: 0; }
+.modulo-vehiculos .tabla tbody tr:hover { background: #fbfcfb; }
+.modulo-vehiculos .tabla .numero { text-align: right; font-variant-numeric: tabular-nums; }
+.modulo-vehiculos .tabla .acciones-fila { text-align: right; white-space: nowrap; }
+.modulo-vehiculos .acciones-fila form { display: inline; margin: 0 0 0 8px; }
+.modulo-vehiculos .boton-pequeno { min-height: 36px; padding: 8px 14px; font-size: 13px; }
+.modulo-vehiculos .boton-peligro { background: transparent; border: 1px solid #ecc1ad; color: #962f13; }
+.modulo-vehiculos .boton-peligro:hover { background: #fff0ea; }
+
+/* Formulario */
+
+.modulo-vehiculos .panel-formulario { max-width: 640px; padding: 32px; }
+.modulo-vehiculos .fila-campos { display: grid; grid-template-columns: 1fr 1fr; gap: 21px; }
+.modulo-vehiculos .campo-error input { border-color: #c4431d; background: #fffaf8; }
+.modulo-vehiculos .ayuda { font-size: 12px; color: var(--secundario); line-height: 1.5; }
+.modulo-vehiculos .error-campo { font-size: 12px; font-weight: 650; color: #962f13; line-height: 1.5; }
+.modulo-vehiculos .acciones-formulario { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.modulo-vehiculos .acciones-formulario .boton { margin-top: 0; }
+
+@media (max-width: 720px) {
+    .modulo-vehiculos { padding-top: 20px; }
+    .modulo-vehiculos .panel-formulario { padding: 22px; }
+    .modulo-vehiculos .fila-campos { grid-template-columns: 1fr; gap: 21px; }
+    .modulo-vehiculos .acciones-formulario .boton { flex: 1 1 100%; }
+    
+    /* Cada fila de la tabla se convierte en una tarjeta con etiquetas visibles */
+    .modulo-vehiculos .tabla, .modulo-vehiculos .tabla tbody, .modulo-vehiculos .tabla tr, .modulo-vehiculos .tabla td { display: block; }
+    .modulo-vehiculos .tabla thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .modulo-vehiculos .tabla tbody tr { padding: 8px 0; border-bottom: 1px solid var(--borde); }
+    .modulo-vehiculos .tabla tbody tr:last-child { border-bottom: 0; }
+    .modulo-vehiculos .tabla td { display: flex; justify-content: space-between; gap: 16px; padding: 8px 18px; border-bottom: 0; text-align: right; }
+    .modulo-vehiculos .tabla td[data-label]::before { content: attr(data-label); color: var(--secundario); font-size: 12px; font-weight: 650; text-align: left; }
+    .modulo-vehiculos .tabla .acciones-fila { justify-content: space-between; padding-top: 12px; }
+}
