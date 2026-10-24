@@ -23,8 +23,7 @@
                 <span class="numero-modulo" aria-hidden="true">01</span>
                 <h2>Clientes</h2>
                 <p>La información de las personas que confían en nosotros.</p>
-                <c:url var="clientesUrl" value="/clientes" />
-                <a class="boton boton-principal" href="${clientesUrl}">Gestionar clientes</a>
+                <span class="estado-modulo">Próximamente</span>
             </article>
             <article class="tarjeta">
                 <span class="numero-modulo" aria-hidden="true">02</span>

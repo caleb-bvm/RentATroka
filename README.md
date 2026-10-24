@@ -10,8 +10,7 @@ Sistema web académico de gestión de alquileres de vehículos. Arquitectura MVC
 - [x] Contraseñas almacenadas como hash, consultas preparadas y formularios protegidos.
 - [x] Pantallas responsive de acceso e inicio; mensajes de error y confirmación.
 - [x] Diagramas ER y MVC, con fuentes editables y explicación para la defensa.
-- [x] CRUD de clientes: alta, listado, edición y eliminación con validación de campos obligatorios y documento único.
-- [ ] CRUD de vehículos y alquileres: pendientes de integración por sus responsables.
+- [ ] CRUD de clientes, vehículos y alquileres: correspondientes a los otros integrantes.
 - [ ] Integración del filtro de vehículos y del listado de alquileres con JOIN.
 - [ ] Documento final de 3-5 páginas con capturas de las funciones completas.
 - [ ] Publicar en GitHub con aportes de los cuatro integrantes y ensayar la defensa.

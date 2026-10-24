@@ -22,5 +22,5 @@ Se revisaron el acceso y el inicio en el navegador, el diseño de ancho reducido
 
 ![Inicio después de ingresar](capturas/inicio.jpg)
 
-Esta verificación corresponde a la base y autenticación, y no cubre el nuevo CRUD de clientes. El módulo de clientes se implementó en una rama separada con pruebas unitarias de servicio; antes de integrarlo se debe ejecutar `mvn clean verify` y hacer una prueba HTTP en Tomcat con MySQL. El CRUD de vehículos y el JOIN mostrado en una JSP también deben verificarse al integrar el módulo de alquileres. La defensa, la rúbrica impresa y la publicación en GitHub siguen siendo tareas de la entrega final.
+Los CRUD todavía no están implementados; esta verificación cubre nuestra base y autenticación. La disponibilidad de vehículos y el JOIN mostrado en una JSP deben verificarse al integrar el módulo de alquileres. La defensa, la rúbrica impresa y la publicación en GitHub siguen siendo tareas de la entrega final.
 
