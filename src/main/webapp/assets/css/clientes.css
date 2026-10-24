@@ -1,0 +1,234 @@
+/* modulo clientes */
+.modulo-clientes {
+    padding: 28px 0 8px;
+}
+
+.modulo-clientes .enlace-volver {
+    display: inline-block;
+    margin-bottom: 18px;
+    font-size: 13px;
+    color: var(--secundario);
+    text-decoration: none;
+}
+
+.modulo-clientes .enlace-volver:hover {
+    color: var(--naranja-oscuro);
+    text-decoration: underline;
+}
+
+.modulo-clientes .encabezado-modulo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 26px;
+}
+
+.modulo-clientes h1 {
+    margin: 10px 0 6px;
+    font-size: clamp(28px, 4vw, 38px);
+    letter-spacing: -1.2px;
+    font-weight: 650;
+}
+
+.modulo-clientes .encabezado-modulo .texto-secundario {
+    margin: 0;
+    font-size: 14px;
+}
+
+.modulo-clientes .solo-lectores {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* paneles */
+
+.modulo-clientes .panel {
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+}
+
+.modulo-clientes .vacio {
+    display: grid;
+    gap: 8px;
+    padding: 44px 28px;
+    text-align: center;
+}
+
+.modulo-clientes .vacio .texto-secundario {
+    margin: 0;
+    font-size: 14px;
+}
+
+.modulo-clientes .contador {
+    margin: 0 0 10px;
+    font-size: 12px;
+    color: var(--secundario);
+}
+
+/* tabla de clientes */
+
+.modulo-clientes .tabla-contenedor {
+    overflow-x: auto;
+}
+
+.modulo-clientes .tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.modulo-clientes .tabla th,
+.modulo-clientes .tabla td {
+    padding: 14px 20px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--borde);
+}
+
+.modulo-clientes .tabla thead th {
+    background: #fafbfa;
+    color: var(--secundario);
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.modulo-clientes .tabla tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.modulo-clientes .tabla tbody tr:hover {
+    background: #fbfcfb;
+}
+
+.modulo-clientes .tabla .acciones-fila {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.modulo-clientes .acciones-fila form {
+    display: inline;
+    margin: 0 0 0 8px;
+}
+
+.modulo-clientes .boton-pequeno {
+    min-height: 36px;
+    padding: 8px 14px;
+    font-size: 13px;
+}
+
+.modulo-clientes .boton-peligro {
+    background: transparent;
+    border: 1px solid #ecc1ad;
+    color: #962f13;
+}
+
+.modulo-clientes .boton-peligro:hover {
+    background: #fff0ea;
+}
+
+/* formulario */
+
+.modulo-clientes .panel-formulario {
+    max-width: 640px;
+    padding: 32px;
+}
+
+.modulo-clientes .campo-error input {
+    border-color: #c4431d;
+    background: #fffaf8;
+}
+
+.modulo-clientes .ayuda {
+    font-size: 12px;
+    color: var(--secundario);
+    line-height: 1.5;
+}
+
+.modulo-clientes .error-campo {
+    font-size: 12px;
+    font-weight: 650;
+    color: #962f13;
+    line-height: 1.5;
+}
+
+.modulo-clientes .acciones-formulario {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.modulo-clientes .acciones-formulario .boton {
+    margin-top: 0;
+}
+
+/* Adaptación a pantallas pequeñas */
+
+@media (max-width: 720px) {
+    .modulo-clientes {
+        padding-top: 20px;
+    }
+
+    .modulo-clientes .panel-formulario {
+        padding: 22px;
+    }
+
+    .modulo-clientes .acciones-formulario .boton {
+        flex: 1 1 100%;
+    }
+
+    .modulo-clientes .tabla,
+    .modulo-clientes .tabla tbody,
+    .modulo-clientes .tabla tr,
+    .modulo-clientes .tabla td {
+        display: block;
+    }
+
+    .modulo-clientes .tabla thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .modulo-clientes .tabla tbody tr {
+        padding: 8px 0;
+        border-bottom: 1px solid var(--borde);
+    }
+
+    .modulo-clientes .tabla tbody tr:last-child {
+        border-bottom: 0;
+    }
+
+    .modulo-clientes .tabla td {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 8px 18px;
+        border-bottom: 0;
+        text-align: right;
+    }
+
+    .modulo-clientes .tabla td[data-label]::before {
+        content: attr(data-label);
+        color: var(--secundario);
+        font-size: 12px;
+        font-weight: 650;
+        text-align: left;
+    }
+
+    .modulo-clientes .tabla .acciones-fila {
+        justify-content: space-between;
+        padding-top: 12px;
+    }
+}
