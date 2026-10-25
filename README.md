@@ -2,19 +2,6 @@
 
 Sistema web académico de gestión de alquileres de vehículos. Arquitectura MVC con JavaBeans, DAO/JDBC, Servlets y JSP/JSTL; MySQL como base de datos y Apache Tomcat como servidor.
 
-## Estado de nuestra parte
-
-- [x] Proyecto Maven WAR preparado para Java 17 o superior y Tomcat 11.
-- [x] Conexión centralizada a MySQL, esquema relacional y datos de prueba.
-- [x] Login, logout, sesión de 30 minutos y protección de rutas internas.
-- [x] Contraseñas almacenadas como hash, consultas preparadas y formularios protegidos.
-- [x] Pantallas responsive de acceso e inicio; mensajes de error y confirmación.
-- [x] Diagramas ER y MVC, con fuentes editables y explicación para la defensa.
-- [ ] CRUD de clientes, vehículos y alquileres: correspondientes a los otros integrantes.
-- [ ] Integración del filtro de vehículos y del listado de alquileres con JOIN.
-- [ ] Documento final de 3-5 páginas con capturas de las funciones completas.
-- [ ] Publicar en GitHub con aportes de los cuatro integrantes y ensayar la defensa.
-
 ## Ejecutar
 
 Requisitos: JDK 17 o superior, Maven, Tomcat 11 y MySQL 8.4. El proyecto compila con `--release 17`. NetBeans incluye una distribución de Maven y puede ejecutar las mismas tareas desde **Clean and Build**.
