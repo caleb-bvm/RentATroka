@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <c:url var="cssUrl" value="/assets/css/estilos.css" />
 <c:url var="cssVehiculosUrl" value="/assets/css/vehiculos.css" />
-<c:url var="jsVehiculosUrl" value="/assets/js/vehiculos.js" />
+<c:url var="jsConfirmarUrl" value="/assets/js/confirmar.js" />
 <c:url var="inicioUrl" value="/inicio" />
 <c:url var="vehiculosUrl" value="/vehiculos" />
 <c:url var="nuevoUrl" value="/vehiculos">
@@ -16,7 +16,7 @@
     <title>Vehículos | RentATroka</title>
     <link rel="stylesheet" href="${cssUrl}">
     <link rel="stylesheet" href="${cssVehiculosUrl}">
-    <script src="${jsVehiculosUrl}" defer></script>
+    <script src="${jsConfirmarUrl}" defer></script>
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/fragmentos/cabecera.jsp" />

@@ -24,9 +24,14 @@ public final class TokenCsrf {
         if (sesion == null || recibido == null) {
             return false;
         }
-        Object esperado = sesion.getAttribute("csrfToken");
-        return esperado instanceof String token && MessageDigest.isEqual(
-                token.getBytes(StandardCharsets.UTF_8), recibido.getBytes(StandardCharsets.UTF_8));
+        String esperado = (String) sesion.getAttribute("csrfToken");
+        if (esperado == null) {
+            return false;
+        }
+        // MessageDigest.isEqual compara en tiempo constante (no revela cuántos caracteres coinciden)
+        byte[] bytesEsperados = esperado.getBytes(StandardCharsets.UTF_8);
+        byte[] bytesRecibidos = recibido.getBytes(StandardCharsets.UTF_8);
+        return MessageDigest.isEqual(bytesEsperados, bytesRecibidos);
     }
 }
 

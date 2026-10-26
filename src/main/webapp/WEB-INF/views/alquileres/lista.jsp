@@ -7,7 +7,7 @@
 
 <c:url var="cssUrl" value="/assets/css/estilos.css" />
 <c:url var="cssAlquileresUrl" value="/assets/css/alquileres.css" />
-<c:url var="jsAlquileresUrl" value="/assets/js/alquileres.js" />
+<c:url var="jsConfirmarUrl" value="/assets/js/confirmar.js" />
 <c:url var="inicioUrl" value="/inicio" />
 <c:url var="alquileresUrl" value="/alquileres" />
 
@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="${cssUrl}">
     <link rel="stylesheet" href="${cssAlquileresUrl}">
 
-    <script src="${jsAlquileresUrl}" defer></script>
+    <script src="${jsConfirmarUrl}" defer></script>
 </head>
 <body>
 

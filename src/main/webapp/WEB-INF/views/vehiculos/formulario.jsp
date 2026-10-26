@@ -46,7 +46,7 @@
                            required minlength="3" maxlength="15" pattern="[A-Za-z0-9\-]{3,15}"
                            title="Letras, números y guiones (de 3 a 15 caracteres)"
                            autocomplete="off" autocapitalize="characters" spellcheck="false"
-                           aria-describedby="ayuda-placa<c:if test='${not empty errores.placa}'> error-placa</c:if>"
+                           aria-describedby="ayuda-placa error-placa"
                            <c:if test="${not empty errores.placa}">aria-invalid="true"</c:if>>
                     <span class="ayuda" id="ayuda-placa">Ejemplo: P001-001. Se guarda en mayúsculas y no puede repetirse.</span>
                     <c:if test="${not empty errores.placa}">
@@ -80,7 +80,7 @@
                     <input id="tarifaDiaria" name="tarifaDiaria" type="number" inputmode="decimal"
                            value="<c:out value='${empty vehiculo.tarifaDiaria ? param.tarifaDiaria : vehiculo.tarifaDiaria}' />"
                            required min="0.01" max="99999999.99" step="0.01"
-                           aria-describedby="ayuda-tarifa<c:if test='${not empty errores.tarifaDiaria}'> error-tarifa</c:if>"
+                           aria-describedby="ayuda-tarifa error-tarifa"
                            <c:if test="${not empty errores.tarifaDiaria}">aria-invalid="true"</c:if>>
                     <span class="ayuda" id="ayuda-tarifa">
                         <c:choose>

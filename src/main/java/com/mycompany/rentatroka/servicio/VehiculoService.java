@@ -4,29 +4,27 @@ import com.mycompany.rentatroka.dao.VehiculoDAO;
 import com.mycompany.rentatroka.modelo.Vehiculo;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.*;
-import java.util.regex.Pattern;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-/*
-    Reglas del módulo de vehículos - normaliza y valida los datos, comprueba la placa única
-    y traduce los errores del gestor DB. El Servlet solo coordina la petición y la respuesta.
- */
-
+// Reglas del módulo de vehículos: limpia y valida los datos, revisa que la placa no se repita
+// y traduce los errores de MySQL. El Servlet solo coordina la petición y la respuesta.
 public class VehiculoService {
 
-    // Clave del mapa de errores para los problemas que no pertenecen a un campo concreto
-    
+    // Clave del mapa de errores para los problemas que no son de un campo
     public static final String ERROR_GENERAL = "general";
 
-    public enum ResultadoEliminacion { ELIMINADO, NO_EXISTE, CON_ALQUILERES }
+    public enum ResultadoEliminacion {
+        ELIMINADO,
+        NO_EXISTE,
+        CON_ALQUILERES
+    }
 
     private static final int MAX_TEXTO = 50;
-    private static final Pattern PLACA = Pattern.compile("[A-Z0-9-]{3,15}");
-    
-    // Hasta 8 enteros y 2 decimales, igual que DECIMAL(10,2) en la tabla
-    private static final Pattern TARIFA = Pattern.compile("-?\\d{1,8}(\\.\\d{1,2})?");
 
-    // Códigos de error de MySQL - entrada duplicada y fila referenciada por otra tabla.
+    // Códigos de error de MySQL
     private static final int MYSQL_ENTRADA_DUPLICADA = 1062;
     private static final int MYSQL_FILA_REFERENCIADA = 1451;
 
@@ -43,54 +41,64 @@ public class VehiculoService {
         this.dao = dao;
     }
 
-    // Convierte el texto del formulario en una tarifa con 2 decimales, null si no es válido
-    
+    // Convierte el texto del formulario en una tarifa con 2 decimales.
+    // Devuelve null si no es un número con hasta 8 enteros y 2 decimales (como DECIMAL(10,2)).
     public static BigDecimal tarifaDesdeTexto(String texto) {
         if (texto == null) {
             return null;
         }
         String limpio = texto.trim();
-        return TARIFA.matcher(limpio).matches() ? new BigDecimal(limpio).setScale(2) : null;
+        if (!limpio.matches("-?[0-9]{1,8}(\\.[0-9]{1,2})?")) {
+            return null;
+        }
+        return new BigDecimal(limpio).setScale(2);
     }
 
-    // Sin criterio devuelve todos los vehículos - con criterio, los que coinciden por placa, marca o modelo
-    
+    // Sin criterio devuelve todos los vehículos; con criterio, los que coinciden por placa, marca o modelo
     public List<Vehiculo> listar(String criterio) throws SQLException {
-        String texto = criterio == null ? "" : criterio.trim();
+        if (criterio == null || criterio.isBlank()) {
+            return dao.listar();
+        }
+        String texto = criterio.trim();
         if (texto.length() > MAX_TEXTO) {
             texto = texto.substring(0, MAX_TEXTO);
         }
-        return texto.isEmpty() ? dao.listar() : dao.buscar(texto);
+        return dao.buscar(texto);
     }
 
     public Optional<Vehiculo> buscarPorId(int id) throws SQLException {
         return dao.buscarPorId(id);
     }
 
-    // Devuelve los errores por campo: si el mapa viene vacío, el vehículo quedó registrado con su id. */
-    
+    // Si el mapa de errores viene vacío, el vehículo quedó registrado con su id
     public Map<String, String> registrar(Vehiculo vehiculo) throws SQLException {
-        normalizar(vehiculo);
+        limpiar(vehiculo);
         Map<String, String> errores = validar(vehiculo);
         if (!errores.isEmpty()) {
             return errores;
         }
+
+        if (dao.existePlaca(vehiculo.getPlaca(), 0)) {
+            errores.put("placa", PLACA_REPETIDA);
+            return errores;
+        }
+
         try {
-            if (dao.existePlaca(vehiculo.getPlaca(), 0)) {
+            vehiculo.setId(dao.insertar(vehiculo));
+        } catch (SQLException ex) {
+            // otra petición registró la misma placa justo antes
+            if (ex.getErrorCode() == MYSQL_ENTRADA_DUPLICADA) {
                 errores.put("placa", PLACA_REPETIDA);
             } else {
-                vehiculo.setId(dao.insertar(vehiculo));
+                throw ex;
             }
-        } catch (SQLException ex) {
-            errores.putAll(traducirDuplicado(ex));
         }
         return errores;
     }
 
-    // Devuelve los errores por campo: si el mapa viene vacío, los cambios quedaron guardados. 
-    
+    // Si el mapa de errores viene vacío, los cambios quedaron guardados
     public Map<String, String> actualizar(Vehiculo vehiculo) throws SQLException {
-        normalizar(vehiculo);
+        limpiar(vehiculo);
         Map<String, String> errores = validar(vehiculo);
         if (vehiculo.getId() <= 0) {
             errores.put(ERROR_GENERAL, VEHICULO_INEXISTENTE);
@@ -98,22 +106,36 @@ public class VehiculoService {
         if (!errores.isEmpty()) {
             return errores;
         }
+
+        if (dao.existePlaca(vehiculo.getPlaca(), vehiculo.getId())) {
+            errores.put("placa", PLACA_REPETIDA);
+            return errores;
+        }
+
         try {
-            if (dao.existePlaca(vehiculo.getPlaca(), vehiculo.getId())) {
-                errores.put("placa", PLACA_REPETIDA);
-            } else if (!dao.actualizar(vehiculo)) {
+            boolean actualizado = dao.actualizar(vehiculo);
+            if (!actualizado) {
                 errores.put(ERROR_GENERAL, VEHICULO_INEXISTENTE);
             }
         } catch (SQLException ex) {
-            errores.putAll(traducirDuplicado(ex));
+            if (ex.getErrorCode() == MYSQL_ENTRADA_DUPLICADA) {
+                errores.put("placa", PLACA_REPETIDA);
+            } else {
+                throw ex;
+            }
         }
         return errores;
     }
 
     public ResultadoEliminacion eliminar(int id) throws SQLException {
         try {
-            return dao.eliminar(id) ? ResultadoEliminacion.ELIMINADO : ResultadoEliminacion.NO_EXISTE;
+            boolean eliminado = dao.eliminar(id);
+            if (eliminado) {
+                return ResultadoEliminacion.ELIMINADO;
+            }
+            return ResultadoEliminacion.NO_EXISTE;
         } catch (SQLException ex) {
+            // MySQL no deja borrar un vehículo que tiene alquileres
             if (ex.getErrorCode() == MYSQL_FILA_REFERENCIADA) {
                 return ResultadoEliminacion.CON_ALQUILERES;
             }
@@ -121,48 +143,54 @@ public class VehiculoService {
         }
     }
 
-    // Valida los datos ya normalizados, sin consultar la base
-    
+    // Valida los datos ya limpios, sin consultar la base de datos
     public Map<String, String> validar(Vehiculo vehiculo) {
         Map<String, String> errores = new LinkedHashMap<>();
-        String placa = vehiculo.getPlaca() == null ? "" : vehiculo.getPlaca();
-        if (placa.isEmpty()) {
+
+        String placa = vehiculo.getPlaca();
+        if (placa == null || placa.isEmpty()) {
             errores.put("placa", "La placa es obligatoria.");
-        } else if (!PLACA.matcher(placa).matches()) {
+        } else if (!placa.matches("[A-Z0-9-]{3,15}")) {
             errores.put("placa", "La placa solo admite letras, números y guiones (de 3 a 15 caracteres).");
         }
-        validarTexto(errores, "marca", "La marca es obligatoria.", "La marca", vehiculo.getMarca());
-        validarTexto(errores, "modelo", "El modelo es obligatorio.", "El modelo", vehiculo.getModelo());
+
+        String marca = vehiculo.getMarca();
+        if (marca == null || marca.isEmpty()) {
+            errores.put("marca", "La marca es obligatoria.");
+        } else if (marca.length() > MAX_TEXTO) {
+            errores.put("marca", "La marca no puede superar los 50 caracteres.");
+        }
+
+        String modelo = vehiculo.getModelo();
+        if (modelo == null || modelo.isEmpty()) {
+            errores.put("modelo", "El modelo es obligatorio.");
+        } else if (modelo.length() > MAX_TEXTO) {
+            errores.put("modelo", "El modelo no puede superar los 50 caracteres.");
+        }
+
         BigDecimal tarifa = vehiculo.getTarifaDiaria();
         if (tarifa == null) {
             errores.put("tarifaDiaria", "Ingresa una tarifa diaria válida, por ejemplo 65.50 (máximo 2 decimales).");
-        } else if (tarifa.signum() <= 0) {
+        } else if (tarifa.compareTo(BigDecimal.ZERO) <= 0) {
             errores.put("tarifaDiaria", "La tarifa diaria debe ser mayor que 0.");
         }
+
         return errores;
     }
 
-    private static void validarTexto(Map<String, String> errores, String campo, String obligatorio,
-            String sujeto, String valor) {
-        if (valor == null || valor.isEmpty()) {
-            errores.put(campo, obligatorio);
-        } else if (valor.length() > MAX_TEXTO) {
-            errores.put(campo, sujeto + " no puede superar los " + MAX_TEXTO + " caracteres.");
+    // Quita espacios sobrantes y guarda la placa en mayúsculas
+    private void limpiar(Vehiculo vehiculo) {
+        if (vehiculo.getPlaca() == null) {
+            vehiculo.setPlaca("");
         }
-    }
-
-    // Si otra petición registró la misma placa entre la comprobación y el INSERT, se informa como error de campo
-    
-    private static Map<String, String> traducirDuplicado(SQLException ex) throws SQLException {
-        if (ex.getErrorCode() != MYSQL_ENTRADA_DUPLICADA) {
-            throw ex;
+        if (vehiculo.getMarca() == null) {
+            vehiculo.setMarca("");
         }
-        return Map.of("placa", PLACA_REPETIDA);
-    }
-
-    private static void normalizar(Vehiculo vehiculo) {
-        vehiculo.setPlaca(vehiculo.getPlaca() == null ? "" : vehiculo.getPlaca().trim().toUpperCase(Locale.ROOT));
-        vehiculo.setMarca(vehiculo.getMarca() == null ? "" : vehiculo.getMarca().trim());
-        vehiculo.setModelo(vehiculo.getModelo() == null ? "" : vehiculo.getModelo().trim());
+        if (vehiculo.getModelo() == null) {
+            vehiculo.setModelo("");
+        }
+        vehiculo.setPlaca(vehiculo.getPlaca().trim().toUpperCase());
+        vehiculo.setMarca(vehiculo.getMarca().trim());
+        vehiculo.setModelo(vehiculo.getModelo().trim());
     }
 }

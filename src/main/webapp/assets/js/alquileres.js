@@ -1,88 +1,60 @@
-// confirmar para eliminar alquiler
-document.addEventListener("submit", function (evento) {
-    const formulario = evento.target;
+// Importe estimado en el formulario de alquiler.
+// Solo es una vista previa: el servidor vuelve a calcular el importe al guardar.
 
-    if (!formulario.matches("form[data-confirmar]")) {
-        return;
+const UN_DIA = 24 * 60 * 60 * 1000; // milisegundos
+
+const resumen = document.getElementById("resumen-alquiler");
+const vehiculo = document.getElementById("vehiculoId");
+const inicio = document.getElementById("fechaInicio");
+const fin = document.getElementById("fechaFin");
+
+// Tarifa del vehículo elegido. Al editar sin cambiar de vehículo se usa la tarifa guardada.
+function obtenerTarifa() {
+    const opcion = vehiculo.options[vehiculo.selectedIndex];
+    if (!opcion || opcion.value === "") {
+        return null;
+    }
+    if (resumen.dataset.tarifaGuardada && opcion.value === resumen.dataset.vehiculoGuardado) {
+        return parseFloat(resumen.dataset.tarifaGuardada);
+    }
+    return parseFloat(opcion.dataset.tarifa);
+}
+
+function actualizarResumen() {
+    // valueAsNumber da la fecha en milisegundos, o NaN si el campo está vacío
+    const desde = inicio.valueAsNumber;
+    const hasta = fin.valueAsNumber;
+    const tarifa = obtenerTarifa();
+
+    // la fecha final debe ser al menos un día después de la inicial
+    if (!isNaN(desde)) {
+        fin.min = new Date(desde + UN_DIA).toISOString().slice(0, 10);
     }
 
-    if (!window.confirm(formulario.dataset.confirmar)) {
-        evento.preventDefault();
-    }
-});
+    let textoTarifa = "—";
+    let textoDias = "—";
+    let textoTotal = "—";
 
-// importe estimado en el formulario (solo es una vista previa; el servidor lo vuelve a calcular)
-document.addEventListener("DOMContentLoaded", function () {
-    const resumen = document.getElementById("resumen-alquiler");
-    const vehiculo = document.getElementById("vehiculoId");
-    const inicio = document.getElementById("fechaInicio");
-    const fin = document.getElementById("fechaFin");
-
-    if (!resumen || !vehiculo || !inicio || !fin) {
-        return;
+    if (tarifa !== null) {
+        textoTarifa = "$" + tarifa.toFixed(2);
     }
 
-    const vehiculoGuardado = resumen.dataset.vehiculoGuardado;
-    const tarifaGuardada = resumen.dataset.tarifaGuardada;
-
-    function aFecha(texto) {
-        const partes = texto.split("-").map(Number);
-        return partes.length === 3 && !partes.includes(NaN)
-            ? Date.UTC(partes[0], partes[1] - 1, partes[2])
-            : null;
-    }
-
-    function dinero(valor) {
-        return "$" + valor.toFixed(2);
-    }
-
-    function tarifaAplicable() {
-        const opcion = vehiculo.options[vehiculo.selectedIndex];
-
-        if (!opcion || !opcion.value) {
-            return null;
+    if (!isNaN(desde) && !isNaN(hasta) && hasta > desde) {
+        const dias = Math.round((hasta - desde) / UN_DIA);
+        textoDias = String(dias);
+        if (tarifa !== null) {
+            textoTotal = "$" + (dias * tarifa).toFixed(2);
         }
-
-        // mismo vehículo que ya tenía el alquiler: se conserva su tarifa guardada
-        if (tarifaGuardada && opcion.value === vehiculoGuardado) {
-            return parseFloat(tarifaGuardada);
-        }
-
-        return parseFloat(opcion.dataset.tarifa);
     }
 
-    function actualizar() {
-        const desde = aFecha(inicio.value);
-        const hasta = aFecha(fin.value);
-        const tarifa = tarifaAplicable();
+    document.getElementById("resumen-tarifa").textContent = textoTarifa;
+    document.getElementById("resumen-dias").textContent = textoDias;
+    document.getElementById("resumen-total").textContent = textoTotal;
+}
 
-        // la fecha final debe ser al menos un día después de la inicial
-        if (desde !== null) {
-            const minimo = new Date(desde + 86400000).toISOString().slice(0, 10);
-            fin.min = minimo;
-        }
-
-        const tarifaTexto = document.getElementById("resumen-tarifa");
-        const diasTexto = document.getElementById("resumen-dias");
-        const totalTexto = document.getElementById("resumen-total");
-
-        tarifaTexto.textContent = tarifa === null ? "—" : dinero(tarifa);
-
-        if (desde === null || hasta === null || hasta <= desde) {
-            diasTexto.textContent = "—";
-            totalTexto.textContent = "—";
-            return;
-        }
-
-        const dias = Math.round((hasta - desde) / 86400000);
-        diasTexto.textContent = String(dias);
-        totalTexto.textContent = tarifa === null ? "—" : dinero(dias * tarifa);
-    }
-
-    [vehiculo, inicio, fin].forEach(function (campo) {
-        campo.addEventListener("input", actualizar);
-        campo.addEventListener("change", actualizar);
-    });
-
-    actualizar();
-});
+if (resumen && vehiculo && inicio && fin) {
+    vehiculo.addEventListener("change", actualizarResumen);
+    inicio.addEventListener("change", actualizarResumen);
+    fin.addEventListener("change", actualizarResumen);
+    actualizarResumen();
+}

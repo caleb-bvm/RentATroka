@@ -2,9 +2,14 @@ package com.mycompany.rentatroka.dao;
 
 import com.mycompany.rentatroka.config.ConexionBD;
 import com.mycompany.rentatroka.modelo.Vehiculo;
-import java.sql.*;
-import java.util.*;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 //  Consultas JDBC de la tabla vehiculos
 
@@ -22,12 +27,9 @@ public class VehiculoDAO {
     }
 
     // Buscar coincidencias parciales por placa, marca o modelo, sin distinguir mayúsculas
-    
     public List<Vehiculo> buscar(String termino) throws SQLException {
-        String sql = SELECT_BASE
-                + " WHERE placa LIKE ? ESCAPE '!' OR marca LIKE ? ESCAPE '!' OR modelo LIKE ? ESCAPE '!'"
-                + " ORDER BY placa";
-        String patron = "%" + escaparComodines(termino) + "%";
+        String sql = SELECT_BASE + " WHERE placa LIKE ? OR marca LIKE ? OR modelo LIKE ? ORDER BY placa";
+        String patron = "%" + termino + "%";
         try (Connection conexion = ConexionBD.obtenerConexion();
                 PreparedStatement consulta = conexion.prepareStatement(sql)) {
             consulta.setString(1, patron);
@@ -45,9 +47,12 @@ public class VehiculoDAO {
                 PreparedStatement consulta = conexion.prepareStatement(sql)) {
             consulta.setInt(1, id);
             try (ResultSet resultado = consulta.executeQuery()) {
-                return resultado.next() ? Optional.of(leerVehiculo(resultado)) : Optional.empty();
+                if (resultado.next()) {
+                    return Optional.of(leerVehiculo(resultado));
+                }
             }
         }
+        return Optional.empty();
     }
 
     // Indica si otra fila ya usa la placa. Al editar se excluye el id del propio vehículo
@@ -111,12 +116,6 @@ public class VehiculoDAO {
             consulta.setInt(1, id);
             return consulta.executeUpdate() > 0;
         }
-    }
-
-    // Evita que los simbolos % y _ escritos por el usuario actúen como comodines de LIKE
-    
-    private static String escaparComodines(String texto) {
-        return texto.replace("!", "!!").replace("%", "!%").replace("_", "!_");
     }
 
     private static List<Vehiculo> leerVehiculos(ResultSet resultado) throws SQLException {

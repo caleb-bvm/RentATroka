@@ -1,7 +1,6 @@
 package com.mycompany.rentatroka.servicio;
 
 import com.mycompany.rentatroka.dao.AlquilerDAO;
-import com.mycompany.rentatroka.dao.AlquilerDAO.Resultado;
 import com.mycompany.rentatroka.dao.ClienteDAO;
 import com.mycompany.rentatroka.dao.VehiculoDAO;
 import com.mycompany.rentatroka.modelo.Alquiler;
@@ -18,8 +17,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+// Reglas del módulo de alquileres: valida fechas y traduce el resultado de la transacción
+// a mensajes para el formulario. La disponibilidad del vehículo la revisa el DAO.
 public class AlquilerService {
 
+    // Clave del mapa de errores para los problemas que no son de un campo
     public static final String ERROR_GENERAL = "general";
 
     public enum ResultadoEliminacion {
@@ -27,10 +29,7 @@ public class AlquilerService {
         NO_EXISTE
     }
 
-    private static final ZoneId ZONA = ZoneId.of("America/El_Salvador");
-
-    private static final String ALQUILER_INEXISTENTE =
-            "El alquiler ya no existe. Vuelve al listado.";
+    private static final String ALQUILER_INEXISTENTE = "El alquiler ya no existe. Vuelve al listado.";
 
     private final AlquilerDAO alquilerDao;
     private final ClienteDAO clienteDao;
@@ -64,59 +63,60 @@ public class AlquilerService {
         return vehiculoDao.listar();
     }
 
-    // registrar alquiler nuevo (valida campos y fechas; la disponibilidad se revisa en la transacción)
+    // Si el mapa de errores viene vacío, el alquiler quedó registrado
     public Map<String, String> registrar(Alquiler alquiler) throws SQLException {
         Map<String, String> errores = validar(alquiler, true);
-
         if (!errores.isEmpty()) {
             return errores;
         }
 
-        traducir(alquilerDao.registrar(alquiler), errores);
+        AlquilerDAO.Resultado resultado = alquilerDao.registrar(alquiler);
+        agregarError(resultado, errores);
         return errores;
     }
 
-    // actualizar alquiler existente
+    // Si el mapa de errores viene vacío, los cambios quedaron guardados
     public Map<String, String> actualizar(Alquiler alquiler) throws SQLException {
         Map<String, String> errores = validar(alquiler, false);
-
         if (alquiler.getId() <= 0) {
             errores.put(ERROR_GENERAL, ALQUILER_INEXISTENTE);
         }
-
         if (!errores.isEmpty()) {
             return errores;
         }
 
-        traducir(alquilerDao.actualizar(alquiler), errores);
+        AlquilerDAO.Resultado resultado = alquilerDao.actualizar(alquiler);
+        agregarError(resultado, errores);
         return errores;
     }
 
     public ResultadoEliminacion eliminar(int id) throws SQLException {
-        return alquilerDao.eliminar(id)
-                ? ResultadoEliminacion.ELIMINADO
-                : ResultadoEliminacion.NO_EXISTE;
+        boolean eliminado = alquilerDao.eliminar(id);
+        if (eliminado) {
+            return ResultadoEliminacion.ELIMINADO;
+        }
+        return ResultadoEliminacion.NO_EXISTE;
     }
 
-    // validaciones del formulario (no consulta la base de datos)
+    // Valida el formulario sin consultar la base de datos.
+    // esNuevo = true cuando se registra (no se permite empezar en el pasado).
     public Map<String, String> validar(Alquiler alquiler, boolean esNuevo) {
         Map<String, String> errores = new LinkedHashMap<>();
 
         if (alquiler.getClienteId() <= 0) {
             errores.put("cliente", "Selecciona un cliente.");
         }
-
         if (alquiler.getVehiculoId() <= 0) {
             errores.put("vehiculo", "Selecciona un vehículo.");
         }
 
         LocalDate inicio = alquiler.getFechaInicio();
         LocalDate fin = alquiler.getFechaFin();
+        LocalDate hoy = LocalDate.now(ZoneId.of("America/El_Salvador"));
 
         if (inicio == null) {
             errores.put("fechaInicio", "La fecha de inicio es obligatoria y debe ser válida.");
-        } else if (esNuevo && inicio.isBefore(hoy())) {
-            // Un alquiler nuevo no puede empezar en el pasado.
+        } else if (esNuevo && inicio.isBefore(hoy)) {
             errores.put("fechaInicio", "La fecha de inicio no puede ser anterior a hoy.");
         }
 
@@ -136,29 +136,21 @@ public class AlquilerService {
 
     // Importe = días × tarifa aplicada (la que quedó guardada en el alquiler)
     public static BigDecimal calcularTotal(Alquiler alquiler) {
-        return alquiler.getTarifaDiariaAplicada()
-                .multiply(BigDecimal.valueOf(calcularDias(alquiler)));
+        BigDecimal dias = BigDecimal.valueOf(calcularDias(alquiler));
+        return alquiler.getTarifaDiariaAplicada().multiply(dias);
     }
 
-    private static LocalDate hoy() {
-        return LocalDate.now(ZONA);
-    }
-
-    // convierte el resultado de la transacción en mensajes para el formulario
-    private static void traducir(Resultado resultado, Map<String, String> errores) {
-        switch (resultado) {
-            case GUARDADO -> {
-            }
-            case CLIENTE_INEXISTENTE ->
-                errores.put("cliente", "El cliente seleccionado ya no existe.");
-            case VEHICULO_INEXISTENTE ->
-                errores.put("vehiculo", "El vehículo seleccionado ya no existe.");
-            case VEHICULO_OCUPADO ->
-                errores.put("vehiculo",
-                        "Ese vehículo ya está alquilado en alguna de las fechas elegidas. "
-                        + "Cambia las fechas o elige otro vehículo.");
-            case ALQUILER_INEXISTENTE ->
-                errores.put(ERROR_GENERAL, ALQUILER_INEXISTENTE);
+    // Convierte el resultado de la transacción en un mensaje para el formulario
+    private void agregarError(AlquilerDAO.Resultado resultado, Map<String, String> errores) {
+        if (resultado == AlquilerDAO.Resultado.CLIENTE_INEXISTENTE) {
+            errores.put("cliente", "El cliente seleccionado ya no existe.");
+        } else if (resultado == AlquilerDAO.Resultado.VEHICULO_INEXISTENTE) {
+            errores.put("vehiculo", "El vehículo seleccionado ya no existe.");
+        } else if (resultado == AlquilerDAO.Resultado.VEHICULO_OCUPADO) {
+            errores.put("vehiculo", "Ese vehículo ya está alquilado en alguna de las fechas elegidas. "
+                    + "Cambia las fechas o elige otro vehículo.");
+        } else if (resultado == AlquilerDAO.Resultado.ALQUILER_INEXISTENTE) {
+            errores.put(ERROR_GENERAL, ALQUILER_INEXISTENTE);
         }
     }
 }

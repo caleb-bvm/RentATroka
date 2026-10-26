@@ -3,7 +3,7 @@
 
 <c:url var="cssUrl" value="/assets/css/estilos.css" />
 <c:url var="cssClientesUrl" value="/assets/css/clientes.css" />
-<c:url var="jsClientesUrl" value="/assets/js/clientes.js" />
+<c:url var="jsConfirmarUrl" value="/assets/js/confirmar.js" />
 <c:url var="inicioUrl" value="/inicio" />
 <c:url var="clientesUrl" value="/clientes" />
 
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="${cssUrl}">
     <link rel="stylesheet" href="${cssClientesUrl}">
 
-    <script src="${jsClientesUrl}" defer></script>
+    <script src="${jsConfirmarUrl}" defer></script>
 </head>
 <body>
 
