@@ -3,6 +3,7 @@
 
 <c:url var="cssUrl" value="/assets/css/estilos.css" />
 <c:url var="clientesUrl" value="/clientes" />
+<c:url var="alquileresUrl" value="/alquileres" />
 
 <!DOCTYPE html>
 <html lang="es">
@@ -65,7 +66,7 @@
                 <span class="estado-modulo">Próximamente</span>
             </article>
 
-            <!-- Parte 3: Alquileres, pendiente -->
+                       <!-- Parte 3: Alquileres -->
             <article class="tarjeta">
                 <span class="numero-modulo" aria-hidden="true">03</span>
 
@@ -75,7 +76,9 @@
                     Los clientes y vehículos conectados en cada alquiler.
                 </p>
 
-                <span class="estado-modulo">Próximamente</span>
+                <a class="boton boton-principal" href="${alquileresUrl}">
+                    Gestionar alquileres
+                </a>
             </article>
 
         </section>
