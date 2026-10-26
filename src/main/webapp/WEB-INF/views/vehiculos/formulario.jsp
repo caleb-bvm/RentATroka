@@ -78,7 +78,7 @@
                 <div class="campo ${not empty errores.tarifaDiaria ? 'campo-error' : ''}">
                     <label for="tarifaDiaria">Tarifa diaria ($)</label>
                     <input id="tarifaDiaria" name="tarifaDiaria" type="number" inputmode="decimal"
-                           value="<c:out value='${vehiculo.tarifaDiaria}' />"
+                           value="<c:out value='${empty vehiculo.tarifaDiaria ? param.tarifaDiaria : vehiculo.tarifaDiaria}' />"
                            required min="0.01" max="99999999.99" step="0.01"
                            aria-describedby="ayuda-tarifa<c:if test='${not empty errores.tarifaDiaria}'> error-tarifa</c:if>"
                            <c:if test="${not empty errores.tarifaDiaria}">aria-invalid="true"</c:if>>

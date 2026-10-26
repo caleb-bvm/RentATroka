@@ -177,7 +177,12 @@ public class AlquilerDAO {
                 }
                 return resultado;
             } catch (SQLException | RuntimeException ex) {
-                conexion.rollback();
+                // si el rollback también falla, se conserva el error original
+                try {
+                    conexion.rollback();
+                } catch (SQLException errorRollback) {
+                    ex.addSuppressed(errorRollback);
+                }
                 throw ex;
             }
         }

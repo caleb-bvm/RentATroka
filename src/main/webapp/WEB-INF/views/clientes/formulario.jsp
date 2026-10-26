@@ -3,7 +3,6 @@
 
 <c:url var="cssUrl" value="/assets/css/estilos.css" />
 <c:url var="cssClientesUrl" value="/assets/css/clientes.css" />
-<c:url var="inicioUrl" value="/clientes" />
 <c:url var="clientesUrl" value="/clientes" />
 
 <c:set var="edicion" value="${cliente.id > 0}" />

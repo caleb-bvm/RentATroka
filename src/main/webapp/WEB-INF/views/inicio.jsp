@@ -3,6 +3,7 @@
 
 <c:url var="cssUrl" value="/assets/css/estilos.css" />
 <c:url var="clientesUrl" value="/clientes" />
+<c:url var="vehiculosUrl" value="/vehiculos" />
 <c:url var="alquileresUrl" value="/alquileres" />
 
 <!DOCTYPE html>
@@ -53,7 +54,7 @@
                 </a>
             </article>
 
-            <!-- Parte 2: Vehículos, pendiente -->
+            <!-- Parte 2: Vehículos -->
             <article class="tarjeta">
                 <span class="numero-modulo" aria-hidden="true">02</span>
 
@@ -63,10 +64,12 @@
                     Las unidades y tarifas que acompañan cada viaje.
                 </p>
 
-                <span class="estado-modulo">Próximamente</span>
+                <a class="boton boton-principal" href="${vehiculosUrl}">
+                    Gestionar vehículos
+                </a>
             </article>
 
-                       <!-- Parte 3: Alquileres -->
+            <!-- Parte 3: Alquileres -->
             <article class="tarjeta">
                 <span class="numero-modulo" aria-hidden="true">03</span>
 

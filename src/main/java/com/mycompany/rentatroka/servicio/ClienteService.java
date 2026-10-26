@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class ClienteService {
 
@@ -22,6 +23,12 @@ public class ClienteService {
     private static final int MAX_NOMBRE = 100;
     private static final int MAX_DOCUMENTO = 30;
     private static final int MAX_TELEFONO = 20;
+
+    // documento ya normalizado en mayúsculas: letras, números y guiones
+    private static final Pattern DOCUMENTO = Pattern.compile("[A-Z0-9-]+");
+
+    // teléfono: dígitos con espacios, guiones o paréntesis; puede iniciar con +
+    private static final Pattern TELEFONO = Pattern.compile("\\+?\\(?[0-9][0-9 ()-]{6,}");
 
     private static final int MYSQL_DOCUMENTO_DUPLICADO = 1062;
     private static final int MYSQL_FILA_REFERENCIADA = 1451;
@@ -161,7 +168,37 @@ public class ClienteService {
                 MAX_TELEFONO
         );
 
+        validarFormato(
+                errores,
+                "documento",
+                "El documento solo admite letras, números y guiones.",
+                cliente.getDocumento(),
+                DOCUMENTO
+        );
+
+        validarFormato(
+                errores,
+                "telefono",
+                "El teléfono debe tener al menos 7 dígitos y solo admite números, espacios, guiones, paréntesis y +.",
+                cliente.getTelefono(),
+                TELEFONO
+        );
+
         return errores;
+    }
+
+    // solo revisa el formato si el campo no tiene ya otro error
+    private static void validarFormato(
+            Map<String, String> errores,
+            String campo,
+            String mensaje,
+            String valor,
+            Pattern formato) {
+
+        if (!errores.containsKey(campo)
+                && !formato.matcher(valor).matches()) {
+            errores.put(campo, mensaje);
+        }
     }
 
     private static void validarTexto(
